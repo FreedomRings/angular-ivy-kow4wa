@@ -8,67 +8,63 @@ import 'chartjs-plugin-doughnutlabel-v3';
   styleUrls: ['./doughnut-example.component.css'],
 })
 export class DoughnutExampleComponent implements OnInit {
-  @ViewChild('chart1') exampleCanvas: ElementRef<HTMLCanvasElement>;
-
   constructor() {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    const DEFAULT_COLORS1 = [
-      '#f08700',
-      '#f49f0a',
-      '#efca08',
-      '#00a6a6',
-      '#bbdef0',
+      this.drawChart();
+  }
+
+  // See the note below (in draw chart) for the reason this is commented out:
+  // @ViewChild('chart1', {static: true}) exampleCanvas: ElementRef<HTMLCanvasElement>;
+
+  DEFAULT_COLORS1 = ['#f08700', '#f49f0a', '#efca08', '#00a6a6', '#bbdef0'];
+
+  DEFAULT_COLORS2 = ['#7fb7be', '#357266', '#dacc3e', '#bc2c1a', '#7d1538'];
+
+  private sampleChart: Chart;
+
+  randomizeData() {
+    this.sampleChart.config.data.datasets[0].data = [
+      this.randomScalingFactor(),
+      this.randomScalingFactor(),
+      this.randomScalingFactor(),
+      this.randomScalingFactor(),
     ];
+    this.sampleChart.update();
+  }
 
-    const DEFAULT_COLORS2 = [
-      '#7fb7be',
-      '#357266',
-      '#dacc3e',
-      '#bc2c1a',
-      '#7d1538',
-    ];
+  getTotal(myChart) {
+    const sum = myChart.config.data.datasets[0].data.reduce((a, b) => a + b, 0);
+    return `Total: ${sum}`;
+  }
 
-    const randomScalingFactor = function () {
-      return Math.round(Math.random() * 100);
-    };
+  randomScalingFactor = function () {
+    return Math.round(Math.random() * 100);
+  };
 
-    document
-      .getElementById('randomizeData')
-      .addEventListener('click', function () {
-        sampleChart.config.data.datasets[0].data = [
-          randomScalingFactor(),
-          randomScalingFactor(),
-          randomScalingFactor(),
-          randomScalingFactor(),
-        ];
-        sampleChart.update();
-      });
-
-    const getTotal = function (myChart) {
-      const sum = myChart.config.data.datasets[0].data.reduce(
-        (a, b) => a + b,
-        0
-      );
-      return `Total: ${sum}`;
-    };
+  drawChart() {
+    // StackBlitz is a "web worker" so a workaround is required to get this
+    // to work for you here.  Normally you would use the @ViewChild above
+    // with an access here that looks like this:
+    //   const ctx = this.exampleCanvas.nativeElement.getContext('2d');
+    const canvas = document.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
 
     // Doughnut with multiple lines of text in the center
-    const ctx = this.exampleCanvas.nativeElement.getContext('2d');
-    const sampleChart = new Chart(ctx, {
+    this.sampleChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
         datasets: [
           {
             data: [
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
+              this.randomScalingFactor(),
+              this.randomScalingFactor(),
+              this.randomScalingFactor(),
+              this.randomScalingFactor(),
             ],
-            backgroundColor: DEFAULT_COLORS2,
+            backgroundColor: this.DEFAULT_COLORS2,
             label: 'Dataset 1',
           },
         ],
@@ -102,41 +98,41 @@ export class DoughnutExampleComponent implements OnInit {
             display: true,
             position: 'top',
           },
-          // doughnutLabel: {
-          //   labels: [
-          //     {
-          //       text: 'The Title',
-          //       color: 'blue',
-          //       font: {
-          //         size: '35',
-          //         family: 'Arial, Helvetica, sans-serif',
-          //         style: 'italic',
-          //         weight: 'bold',
-          //       },
-          //     },
-          //     {
-          //       text: 'The Subtitle',
-          //       font: {
-          //         size: '25',
-          //       },
-          //       color: 'grey',
-          //     },
-          //     {
-          //       text: '$100.00',
-          //       font: {
-          //         size: '20',
-          //       },
-          //       color: 'red',
-          //     },
-          //     {
-          //       text: getTotal,
-          //       font: {
-          //         size: '20',
-          //       },
-          //       color: 'green',
-          //     },
-          //   ],
-          // },
+          doughnutLabel: {
+            labels: [
+              {
+                text: 'The Title',
+                color: 'blue',
+                font: {
+                  size: 35,
+                  family: 'Arial, Helvetica, sans-serif',
+                  style: 'italic',
+                  weight: 'bold',
+                },
+              },
+              {
+                text: 'The Subtitle',
+                font: {
+                  size: 25,
+                },
+                color: 'grey',
+              },
+              {
+                text: '$100.00',
+                font: {
+                  size: 20,
+                },
+                color: 'red',
+              },
+              {
+                text: this.getTotal,
+                font: {
+                  size: 20,
+                },
+                color: 'green',
+              },
+            ],
+          },
         },
       },
     });
