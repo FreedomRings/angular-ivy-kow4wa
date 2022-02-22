@@ -14,8 +14,8 @@ body {
 }
 
 a {
-  color: #f27173;
-  text-decoration: none;
+  color: #090b9e;
+  font-weight: 700;
 }
 
 a:hover {
@@ -80,7 +80,7 @@ a:hover {
 }
 
 #header .title .main {
-  color: #f27173;
+  color: #8f1012;
   display: inline-block;
   font-size: 1.5rem;
   font-weight: 600;
@@ -110,41 +110,40 @@ a:hover {
   margin-right: 0.5em;
 }
 
-.samples-category {
-  display: inline-block;
-  margin-bottom: 32px;
-  vertical-align: top;
-  width: 25%;
+canvas {
+  border: 1px solid;
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.samples-category > .title {
-  color: #aaa;
-  font-weight: 300;
-  font-size: 1.5rem;
+.centeredCanvas {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-.samples-category:hover > .title {
-  color: black;
+.centeredButton {
+  margin-bottom: 10px;
+  margin: auto;
+  display: block;
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-.samples-category > .items {
-  padding: 8px 0;
-}
-
-.samples-entry {
-  padding: 0 0 4px 0;
-}
-
-.samples-entry > .title {
-  font-weight: 700;
+.chartContainer {
+  padding-top: 10px;
 }
 
 @media (max-width: 640px) {
   #header {
     padding: 8px 0;
-  }
-  .samples-category {
-    width: 33%;
   }
 }
 
@@ -160,14 +159,5 @@ a:hover {
   }
   #header .links .fa {
     margin: 0;
-  }
-  .samples-category {
-    width: 50%;
-  }
-}
-
-@media (max-width: 384px) {
-  .samples-category {
-    width: 100%;
   }
 }

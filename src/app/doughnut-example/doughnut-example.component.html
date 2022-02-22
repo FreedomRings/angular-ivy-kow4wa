@@ -11,15 +11,14 @@
     <a
       class="btn btn-gh"
       href="https://github.com/FreedomRings/chartjs-plugin-doughnutlabel-v3"
-      >GitHub</a
+      >View the source on GitHub</a
     >
   </div>
 </div>
+<button id="randomizeData" class="centeredButton" (click)="randomizeData()">
+  Click to Randomize Chart Data
+</button>
 
-<div>
-  <canvas id="chart1" width="500" height="500"></canvas>
-</div>
-
-<div>
-  <button id="randomizeData" (click)="randomizeData()">Randomize Data</button>
+<div class="chartContainer">
+  <canvas id="chart1" class="centeredCanvas" width="500" height="500"></canvas>
 </div>
